@@ -1,12 +1,5 @@
--- 既存データを削除
-DELETE FROM likes;
-DELETE FROM comments;
-DELETE FROM municipalities;
-
--- シーケンスをリセット
-ALTER SEQUENCE municipalities_id_seq RESTART WITH 1;
-
--- 宮崎県全26市町村を追加
+-- 宮崎県全26市町村を追加（既存データは保持）
+-- 注意: 既存データを削除しないこと
 INSERT INTO municipalities (name) VALUES
   ('宮崎市'),
   ('都城市'),
