@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://miyazaki-event-pocket.vercel.app/sitemap.xml
