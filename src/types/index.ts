@@ -21,5 +21,4 @@ export interface Like {
   created_at: string;
 }
 
-export type SortType = "newest" | "likes" | "random";
-export type PeriodFilter = "all" | "today" | "week" | "month";
+export type SortType = "newest" | "oldest" | "likes" | "random";

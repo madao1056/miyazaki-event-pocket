@@ -4,13 +4,14 @@ import { useState, useEffect, useCallback } from "react";
 import PostForm from "@/components/PostForm";
 import CommentList from "@/components/CommentList";
 import Filters from "@/components/Filters";
-import type { Municipality, Comment, SortType, PeriodFilter } from "@/types";
+import type { Municipality, Comment, SortType } from "@/types";
 
 export default function Home() {
   const [municipalities, setMunicipalities] = useState<Municipality[]>([]);
   const [comments, setComments] = useState<Comment[]>([]);
   const [selectedMunicipality, setSelectedMunicipality] = useState<number | null>(null);
-  const [period, setPeriod] = useState<PeriodFilter>("all");
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
   const [sort, setSort] = useState<SortType>("newest");
   const [keyword, setKeyword] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -28,7 +29,12 @@ export default function Home() {
     if (selectedMunicipality) {
       params.set("municipality_id", String(selectedMunicipality));
     }
-    params.set("period", period);
+    if (dateFrom) {
+      params.set("date_from", dateFrom);
+    }
+    if (dateTo) {
+      params.set("date_to", dateTo);
+    }
     params.set("sort", sort);
     if (keyword.trim()) {
       params.set("keyword", keyword.trim());
@@ -40,7 +46,7 @@ export default function Home() {
       setComments(data);
     }
     setIsLoading(false);
-  }, [selectedMunicipality, period, sort, keyword]);
+  }, [selectedMunicipality, dateFrom, dateTo, sort, keyword]);
 
   useEffect(() => {
     fetchMunicipalities();
@@ -89,8 +95,10 @@ export default function Home() {
           municipalities={municipalities}
           selectedMunicipality={selectedMunicipality}
           onMunicipalityChange={setSelectedMunicipality}
-          period={period}
-          onPeriodChange={setPeriod}
+          dateFrom={dateFrom}
+          onDateFromChange={setDateFrom}
+          dateTo={dateTo}
+          onDateToChange={setDateTo}
           sort={sort}
           onSortChange={setSort}
           keyword={keyword}

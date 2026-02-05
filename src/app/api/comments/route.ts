@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 import { generateClientHash } from "@/lib/hash";
-import type { PeriodFilter, SortType } from "@/types";
+import type { SortType } from "@/types";
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const municipalityId = searchParams.get("municipality_id");
-  const period = (searchParams.get("period") || "all") as PeriodFilter;
+  const dateFrom = searchParams.get("date_from");
+  const dateTo = searchParams.get("date_to");
   const sort = (searchParams.get("sort") || "newest") as SortType;
   const keyword = searchParams.get("keyword");
 
@@ -22,30 +23,20 @@ export async function GET(request: NextRequest) {
     query = query.ilike("content", `%${keyword}%`);
   }
 
-  if (period !== "all") {
-    const now = new Date();
-    let startDate: Date;
+  if (dateFrom) {
+    query = query.gte("created_at", `${dateFrom}T00:00:00`);
+  }
 
-    switch (period) {
-      case "today":
-        startDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-        break;
-      case "week":
-        startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-        break;
-      case "month":
-        startDate = new Date(now.getFullYear(), now.getMonth(), 1);
-        break;
-      default:
-        startDate = new Date(0);
-    }
-
-    query = query.gte("created_at", startDate.toISOString());
+  if (dateTo) {
+    query = query.lte("created_at", `${dateTo}T23:59:59`);
   }
 
   switch (sort) {
     case "newest":
       query = query.order("created_at", { ascending: false });
+      break;
+    case "oldest":
+      query = query.order("created_at", { ascending: true });
       break;
     case "likes":
       query = query.order("like_count", { ascending: false });
