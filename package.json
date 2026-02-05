@@ -13,6 +13,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@microsoft/clarity": "^1.0.2",
     "@supabase/supabase-js": "^2.93.2",
     "next": "^14.2.35",
     "react": "^18.3.1",

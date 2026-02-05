@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import BackgroundImage from "@/components/BackgroundImage";
+import ClarityProvider from "@/components/ClarityProvider";
 
 export const metadata: Metadata = {
   title: "MiyazakiEventPocket - 宮崎の出来事を記録",
@@ -15,6 +16,7 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body className="min-h-screen">
+        <ClarityProvider />
         <BackgroundImage />
         {children}
       </body>
