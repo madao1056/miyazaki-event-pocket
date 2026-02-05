@@ -7,16 +7,19 @@ import CommentCard from "./CommentCard";
 interface CommentListProps {
   comments: Comment[];
   onLike: () => void;
+  onEdit: () => void;
 }
 
-export default function CommentList({ comments, onLike }: CommentListProps) {
+export default function CommentList({ comments, onLike, onEdit }: CommentListProps) {
   const [likedIds, setLikedIds] = useState<Set<string>>(new Set());
+  const [editableIds, setEditableIds] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     if (comments.length === 0) return;
 
+    const ids = comments.map((c) => c.id).join(",");
+
     const fetchLikedStatus = async () => {
-      const ids = comments.map((c) => c.id).join(",");
       const res = await fetch(`/api/likes?comment_ids=${ids}`);
       if (res.ok) {
         const data = await res.json();
@@ -24,7 +27,16 @@ export default function CommentList({ comments, onLike }: CommentListProps) {
       }
     };
 
+    const fetchEditableStatus = async () => {
+      const res = await fetch(`/api/comments/editable?ids=${ids}`);
+      if (res.ok) {
+        const data = await res.json();
+        setEditableIds(new Set(data.editable_ids));
+      }
+    };
+
     fetchLikedStatus();
+    fetchEditableStatus();
   }, [comments]);
 
   const handleLikeToggle = (commentId: string, isLiked: boolean) => {
@@ -38,6 +50,10 @@ export default function CommentList({ comments, onLike }: CommentListProps) {
       return next;
     });
     onLike();
+  };
+
+  const handleEdit = () => {
+    onEdit();
   };
 
   if (comments.length === 0) {
@@ -62,6 +78,8 @@ export default function CommentList({ comments, onLike }: CommentListProps) {
           comment={comment}
           onLikeToggle={handleLikeToggle}
           isLiked={likedIds.has(comment.id)}
+          isEditable={editableIds.has(comment.id)}
+          onEdit={handleEdit}
           index={index}
         />
       ))}

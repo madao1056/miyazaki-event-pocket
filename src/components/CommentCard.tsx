@@ -7,6 +7,8 @@ interface CommentCardProps {
   comment: Comment;
   onLikeToggle: (commentId: string, isLiked: boolean) => void;
   isLiked: boolean;
+  isEditable?: boolean;
+  onEdit?: () => void;
   index?: number;
 }
 
@@ -40,15 +42,43 @@ const renderContentWithLinks = (content: string) => {
   });
 };
 
-export default function CommentCard({ comment, onLikeToggle, isLiked, index = 0 }: CommentCardProps) {
+export default function CommentCard({ comment, onLikeToggle, isLiked, isEditable = false, onEdit, index = 0 }: CommentCardProps) {
   const [isLiking, setIsLiking] = useState(false);
   const [likeCount, setLikeCount] = useState(comment.like_count);
   const [liked, setLiked] = useState(isLiked);
   const [animating, setAnimating] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editContent, setEditContent] = useState(comment.content);
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     setLiked(isLiked);
   }, [isLiked]);
+
+  const handleSaveEdit = async () => {
+    if (isSaving || !editContent.trim()) return;
+    setIsSaving(true);
+
+    try {
+      const res = await fetch("/api/comments", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: comment.id, content: editContent.trim() }),
+      });
+
+      if (res.ok) {
+        setIsEditing(false);
+        onEdit?.();
+      }
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setEditContent(comment.content);
+    setIsEditing(false);
+  };
 
   const formatDate = (dateStr: string): string => {
     const date = new Date(dateStr);
@@ -120,14 +150,55 @@ export default function CommentCard({ comment, onLikeToggle, isLiked, index = 0 
       </div>
 
       {/* 本文 */}
-      <p className="text-gray-800 whitespace-pre-wrap mb-4 text-base leading-relaxed">
-        {renderContentWithLinks(comment.content)}
-      </p>
+      {isEditing ? (
+        <div className="mb-4">
+          <textarea
+            value={editContent}
+            onChange={(e) => setEditContent(e.target.value.slice(0, 500))}
+            className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-400 resize-none text-gray-700"
+            rows={4}
+            maxLength={500}
+          />
+          <div className="flex items-center justify-between mt-2">
+            <span className="text-xs text-gray-400">{editContent.length}/500</span>
+            <div className="flex gap-2">
+              <button
+                onClick={handleCancelEdit}
+                className="px-3 py-1.5 text-sm text-gray-500 hover:text-gray-700"
+              >
+                キャンセル
+              </button>
+              <button
+                onClick={handleSaveEdit}
+                disabled={isSaving || !editContent.trim()}
+                className="px-3 py-1.5 text-sm bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50"
+              >
+                {isSaving ? "保存中..." : "保存"}
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <p className="text-gray-800 whitespace-pre-wrap mb-4 text-base leading-relaxed">
+          {renderContentWithLinks(comment.content)}
+        </p>
+      )}
 
       {/* フッター */}
       <div className="flex items-center justify-between text-sm">
         <span className="text-gray-400">{formatDate(comment.created_at)}</span>
-        <button
+        <div className="flex items-center gap-2">
+          {isEditable && !isEditing && (
+            <button
+              onClick={() => setIsEditing(true)}
+              className="flex items-center gap-1 px-2 py-1.5 rounded-full bg-gray-50 text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition-all"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+              </svg>
+            </button>
+          )}
+          <button
           onClick={handleLike}
           disabled={isLiking}
           className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all ${
@@ -151,6 +222,7 @@ export default function CommentCard({ comment, onLikeToggle, isLiked, index = 0 
           </svg>
           <span className="font-medium">{likeCount}</span>
         </button>
+        </div>
       </div>
     </div>
   );

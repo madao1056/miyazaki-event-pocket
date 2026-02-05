@@ -100,3 +100,63 @@ export async function POST(request: NextRequest) {
 
   return NextResponse.json(data, { status: 201 });
 }
+
+export async function PATCH(request: NextRequest) {
+  const body = await request.json();
+  const { id, content } = body;
+
+  if (!id || !content) {
+    return NextResponse.json(
+      { error: "id and content are required" },
+      { status: 400 }
+    );
+  }
+
+  if (content.length > 500) {
+    return NextResponse.json(
+      { error: "Content must be 500 characters or less" },
+      { status: 400 }
+    );
+  }
+
+  const clientHash = await generateClientHash();
+
+  // 投稿を取得して権限チェック
+  const { data: comment } = await supabase
+    .from("comments")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (!comment) {
+    return NextResponse.json({ error: "Comment not found" }, { status: 404 });
+  }
+
+  // client_hashが一致するか確認
+  if (comment.client_hash !== clientHash) {
+    return NextResponse.json({ error: "Not authorized" }, { status: 403 });
+  }
+
+  // 1時間以内か確認
+  const createdAt = new Date(comment.created_at);
+  const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
+  if (createdAt < oneHourAgo) {
+    return NextResponse.json(
+      { error: "Edit time expired (1 hour limit)" },
+      { status: 403 }
+    );
+  }
+
+  const { data, error } = await supabase
+    .from("comments")
+    .update({ content })
+    .eq("id", id)
+    .select("*, municipality:municipalities(*)")
+    .single();
+
+  if (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  return NextResponse.json(data);
+}

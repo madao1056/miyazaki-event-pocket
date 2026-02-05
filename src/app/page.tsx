@@ -54,6 +54,10 @@ export default function Home() {
     fetchComments();
   };
 
+  const handleEdit = () => {
+    fetchComments();
+  };
+
   return (
     <main className="max-w-2xl mx-auto px-4 py-8">
       {/* ヘッダー */}
@@ -91,7 +95,7 @@ export default function Home() {
       {isLoading ? (
         <div className="text-center text-gray-500 py-8">読み込み中...</div>
       ) : (
-        <CommentList comments={comments} onLike={handleLike} />
+        <CommentList comments={comments} onLike={handleLike} onEdit={handleEdit} />
       )}
     </main>
   );
