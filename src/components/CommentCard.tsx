@@ -17,6 +17,29 @@ const LocationIcon = () => (
   </svg>
 );
 
+const urlRegex = /(https?:\/\/[^\s]+)/g;
+
+const renderContentWithLinks = (content: string) => {
+  const parts = content.split(urlRegex);
+  return parts.map((part, i) => {
+    if (urlRegex.test(part)) {
+      urlRegex.lastIndex = 0;
+      return (
+        <a
+          key={i}
+          href={part}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-purple-600 hover:text-purple-800 underline break-all"
+        >
+          {part}
+        </a>
+      );
+    }
+    return part;
+  });
+};
+
 export default function CommentCard({ comment, onLikeToggle, isLiked, index = 0 }: CommentCardProps) {
   const [isLiking, setIsLiking] = useState(false);
   const [likeCount, setLikeCount] = useState(comment.like_count);
@@ -98,7 +121,7 @@ export default function CommentCard({ comment, onLikeToggle, isLiked, index = 0 
 
       {/* 本文 */}
       <p className="text-gray-800 whitespace-pre-wrap mb-4 text-base leading-relaxed">
-        {comment.content}
+        {renderContentWithLinks(comment.content)}
       </p>
 
       {/* フッター */}
