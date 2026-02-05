@@ -1,4 +1,5 @@
 -- コメントの編集ポリシーを追加（1時間以内かつ同一client_hash）
+DROP POLICY IF EXISTS "comments_update_own_within_1hour" ON comments;
 CREATE POLICY "comments_update_own_within_1hour" ON comments
   FOR UPDATE USING (
     created_at > NOW() - INTERVAL '1 hour'

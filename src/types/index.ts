@@ -11,6 +11,8 @@ export interface Comment {
   like_count: number;
   client_hash: string;
   created_at: string;
+  /** イベント開催日（任意） */
+  event_date?: string;
   municipality?: Municipality;
 }
 

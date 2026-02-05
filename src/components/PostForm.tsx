@@ -11,6 +11,7 @@ interface PostFormProps {
 export default function PostForm({ municipalities, onPost }: PostFormProps) {
   const [municipalityId, setMunicipalityId] = useState<number | "">("");
   const [content, setContent] = useState("");
+  const [eventDate, setEventDate] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -25,12 +26,14 @@ export default function PostForm({ municipalities, onPost }: PostFormProps) {
         body: JSON.stringify({
           municipality_id: municipalityId,
           content: content.trim(),
+          event_date: eventDate || undefined,
         }),
       });
 
       if (res.ok) {
         setMunicipalityId("");
         setContent("");
+        setEventDate("");
         onPost();
       }
     } finally {
@@ -78,6 +81,20 @@ export default function PostForm({ municipalities, onPost }: PostFormProps) {
           required
         />
         <div className="text-xs text-gray-400 text-right mt-1">{content.length}/500</div>
+      </div>
+
+      {/* イベント日付入力 */}
+      <div className="mb-4">
+        <label htmlFor="event_date" className="block text-sm font-medium text-gray-600 mb-1">
+          イベント開催日（任意）
+        </label>
+        <input
+          type="date"
+          id="event_date"
+          value={eventDate}
+          onChange={(e) => setEventDate(e.target.value)}
+          className="w-full px-4 py-3 bg-gray-50 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-400 text-gray-700"
+        />
       </div>
 
       <button

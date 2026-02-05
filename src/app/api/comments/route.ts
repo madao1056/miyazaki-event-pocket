@@ -23,12 +23,22 @@ export async function GET(request: NextRequest) {
     query = query.ilike("content", `%${keyword}%`);
   }
 
-  if (dateFrom) {
-    query = query.gte("created_at", `${dateFrom}T00:00:00`);
-  }
-
-  if (dateTo) {
-    query = query.lte("created_at", `${dateTo}T23:59:59`);
+  // 日付フィルター: created_atまたはevent_dateのどちらかが範囲内であればマッチ
+  if (dateFrom && dateTo) {
+    // 両方指定: created_atかevent_dateのどちらかが範囲内
+    query = query.or(
+      `and(created_at.gte.${dateFrom}T00:00:00,created_at.lte.${dateTo}T23:59:59),and(event_date.gte.${dateFrom},event_date.lte.${dateTo})`
+    );
+  } else if (dateFrom) {
+    // 開始日のみ: created_atかevent_dateのどちらかが開始日以降
+    query = query.or(
+      `created_at.gte.${dateFrom}T00:00:00,event_date.gte.${dateFrom}`
+    );
+  } else if (dateTo) {
+    // 終了日のみ: created_atかevent_dateのどちらかが終了日以前
+    query = query.or(
+      `created_at.lte.${dateTo}T23:59:59,event_date.lte.${dateTo}`
+    );
   }
 
   switch (sort) {
@@ -66,7 +76,7 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
-  const { municipality_id, content } = body;
+  const { municipality_id, content, event_date } = body;
 
   if (!municipality_id || !content) {
     return NextResponse.json(
@@ -84,13 +94,25 @@ export async function POST(request: NextRequest) {
 
   const clientHash = await generateClientHash();
 
+  // 挿入データを構築（event_dateは任意）
+  const insertData: {
+    municipality_id: number;
+    content: string;
+    client_hash: string;
+    event_date?: string;
+  } = {
+    municipality_id,
+    content,
+    client_hash: clientHash,
+  };
+
+  if (event_date) {
+    insertData.event_date = event_date;
+  }
+
   const { data, error } = await supabase
     .from("comments")
-    .insert({
-      municipality_id,
-      content,
-      client_hash: clientHash,
-    })
+    .insert(insertData)
     .select("*, municipality:municipalities(*)")
     .single();
 

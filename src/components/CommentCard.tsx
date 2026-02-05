@@ -19,6 +19,22 @@ const LocationIcon = () => (
   </svg>
 );
 
+const CalendarIcon = () => (
+  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+  </svg>
+);
+
+/**
+ * イベント日付をフォーマット（YYYY-MM-DD形式をM/D形式に変換）
+ */
+const formatEventDate = (dateStr: string): string => {
+  const date = new Date(dateStr);
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  return `${month}/${day}`;
+};
+
 const urlRegex = /(https?:\/\/[^\s]+)/g;
 
 const renderContentWithLinks = (content: string) => {
@@ -139,14 +155,26 @@ export default function CommentCard({ comment, onLikeToggle, isLiked, isEditable
       className="bg-white/80 backdrop-blur-sm p-5 rounded-2xl shadow-lg border border-white/50 card-hover animate-fade-in-up"
       style={{ animationDelay: `${index * 0.1}s` }}
     >
-      {/* 地域バッジ */}
-      <div className="flex items-center gap-1.5 mb-3">
-        <span className="text-purple-500">
-          <LocationIcon />
-        </span>
-        <span className="text-xs font-medium text-purple-600">
-          {municipalityName}
-        </span>
+      {/* 地域バッジとイベント日付 */}
+      <div className="flex items-center gap-3 mb-3 flex-wrap">
+        <div className="flex items-center gap-1.5">
+          <span className="text-purple-500">
+            <LocationIcon />
+          </span>
+          <span className="text-xs font-medium text-purple-600">
+            {municipalityName}
+          </span>
+        </div>
+        {comment.event_date && (
+          <div className="flex items-center gap-1.5">
+            <span className="text-orange-500">
+              <CalendarIcon />
+            </span>
+            <span className="text-xs font-medium text-orange-600">
+              {formatEventDate(comment.event_date)}
+            </span>
+          </div>
+        )}
       </div>
 
       {/* 本文 */}
