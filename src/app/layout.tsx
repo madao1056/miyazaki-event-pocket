@@ -6,6 +6,9 @@ import ClarityProvider from "@/components/ClarityProvider";
 export const metadata: Metadata = {
   title: "MiyazakiEventPocket - 宮崎の出来事を記録",
   description: "宮崎県の今、起きている出来事を事実ベースで匿名投稿・閲覧できるアプリ",
+  verification: {
+    google: "O32SL8ZFj4lGof0W5pwWINwKJJUSV_Wj123_1wRZQA4",
+  },
 };
 
 export default function RootLayout({
