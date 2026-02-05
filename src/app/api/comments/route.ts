@@ -8,6 +8,7 @@ export async function GET(request: NextRequest) {
   const municipalityId = searchParams.get("municipality_id");
   const period = (searchParams.get("period") || "all") as PeriodFilter;
   const sort = (searchParams.get("sort") || "newest") as SortType;
+  const keyword = searchParams.get("keyword");
 
   let query = supabase
     .from("comments")
@@ -15,6 +16,10 @@ export async function GET(request: NextRequest) {
 
   if (municipalityId) {
     query = query.eq("municipality_id", Number(municipalityId));
+  }
+
+  if (keyword) {
+    query = query.ilike("content", `%${keyword}%`);
   }
 
   if (period !== "all") {

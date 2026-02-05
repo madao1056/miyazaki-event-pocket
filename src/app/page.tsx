@@ -12,6 +12,7 @@ export default function Home() {
   const [selectedMunicipality, setSelectedMunicipality] = useState<number | null>(null);
   const [period, setPeriod] = useState<PeriodFilter>("all");
   const [sort, setSort] = useState<SortType>("newest");
+  const [keyword, setKeyword] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchMunicipalities = useCallback(async () => {
@@ -29,6 +30,9 @@ export default function Home() {
     }
     params.set("period", period);
     params.set("sort", sort);
+    if (keyword.trim()) {
+      params.set("keyword", keyword.trim());
+    }
 
     const res = await fetch(`/api/comments?${params.toString()}`);
     if (res.ok) {
@@ -36,7 +40,7 @@ export default function Home() {
       setComments(data);
     }
     setIsLoading(false);
-  }, [selectedMunicipality, period, sort]);
+  }, [selectedMunicipality, period, sort, keyword]);
 
   useEffect(() => {
     fetchMunicipalities();
@@ -89,6 +93,8 @@ export default function Home() {
           onPeriodChange={setPeriod}
           sort={sort}
           onSortChange={setSort}
+          keyword={keyword}
+          onKeywordChange={setKeyword}
         />
       </div>
 
