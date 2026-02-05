@@ -61,7 +61,11 @@ export async function GET(request: NextRequest) {
     comments = comments.sort(() => Math.random() - 0.5);
   }
 
-  return NextResponse.json(comments);
+  return NextResponse.json(comments, {
+    headers: {
+      "Cache-Control": "no-store, max-age=0",
+    },
+  });
 }
 
 export async function POST(request: NextRequest) {
