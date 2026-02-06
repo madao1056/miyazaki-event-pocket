@@ -4,8 +4,8 @@
   "description": "宮崎県の今、起きている出来事を事実ベースで匿名投稿・閲覧できるアプリ",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#f3e8ff",
-  "theme_color": "#9333ea",
+  "background_color": "#fff7ed",
+  "theme_color": "#f67a05",
   "orientation": "portrait-primary",
   "icons": [
     {

@@ -41,7 +41,7 @@ export default function Filters({
           placeholder="キーワード検索..."
           value={keyword}
           onChange={(e) => onKeywordChange(e.target.value)}
-          className="w-full pl-9 pr-3 py-2 bg-white/80 backdrop-blur-sm border-0 rounded-xl text-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-sm"
+          className="w-full pl-9 pr-3 py-2 bg-white/80 backdrop-blur-sm border-0 rounded-xl text-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-400 shadow-sm"
         />
       </div>
 
@@ -49,7 +49,7 @@ export default function Filters({
       <select
         value={selectedMunicipality ?? ""}
         onChange={(e) => onMunicipalityChange(e.target.value ? Number(e.target.value) : null)}
-        className="w-full px-3 py-2 bg-white/80 backdrop-blur-sm border-0 rounded-xl text-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-sm"
+        className="w-full px-3 py-2 bg-white/80 backdrop-blur-sm border-0 rounded-xl text-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-400 shadow-sm"
       >
         <option value="">すべての地域</option>
         {municipalities.map((m) => (
@@ -63,7 +63,7 @@ export default function Filters({
       <select
         value={sort}
         onChange={(e) => onSortChange(e.target.value as SortType)}
-        className="w-full px-3 py-2 bg-white/80 backdrop-blur-sm border-0 rounded-xl text-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-sm"
+        className="w-full px-3 py-2 bg-white/80 backdrop-blur-sm border-0 rounded-xl text-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-400 shadow-sm"
       >
         <option value="newest">新着順</option>
         <option value="oldest">古い順</option>
@@ -77,14 +77,14 @@ export default function Filters({
           type="date"
           value={dateFrom}
           onChange={(e) => onDateFromChange(e.target.value)}
-          className="flex-1 px-3 py-2 bg-white/80 backdrop-blur-sm border-0 rounded-xl text-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-sm"
+          className="flex-1 px-3 py-2 bg-white/80 backdrop-blur-sm border-0 rounded-xl text-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-400 shadow-sm"
         />
         <span className="text-xs text-gray-500">〜</span>
         <input
           type="date"
           value={dateTo}
           onChange={(e) => onDateToChange(e.target.value)}
-          className="flex-1 px-3 py-2 bg-white/80 backdrop-blur-sm border-0 rounded-xl text-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-sm"
+          className="flex-1 px-3 py-2 bg-white/80 backdrop-blur-sm border-0 rounded-xl text-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-400 shadow-sm"
         />
         {(dateFrom || dateTo) && (
           <button

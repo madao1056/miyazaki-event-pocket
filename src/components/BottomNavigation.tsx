@@ -18,7 +18,7 @@ export default function BottomNavigation({ onPostClick }: BottomNavigationProps)
           <Link
             href="/"
             className={`flex items-center justify-center w-16 h-full transition-colors ${
-              pathname === "/" ? "text-purple-600" : "text-gray-400 hover:text-gray-600"
+              pathname === "/" ? "text-orange-500" : "text-gray-400 hover:text-gray-600"
             }`}
             aria-label="ホーム"
           >
@@ -47,7 +47,7 @@ export default function BottomNavigation({ onPostClick }: BottomNavigationProps)
           <Link
             href="/search"
             className={`flex items-center justify-center w-16 h-full transition-colors ${
-              pathname === "/search" ? "text-purple-600" : "text-gray-400 hover:text-gray-600"
+              pathname === "/search" ? "text-orange-500" : "text-gray-400 hover:text-gray-600"
             }`}
             aria-label="検索"
           >

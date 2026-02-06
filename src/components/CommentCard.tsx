@@ -48,7 +48,7 @@ const renderContentWithLinks = (content: string) => {
           href={part}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-purple-600 hover:text-purple-800 underline break-all"
+          className="text-sky-600 hover:text-sky-800 underline break-all"
         >
           {part}
         </a>
@@ -158,10 +158,10 @@ export default function CommentCard({ comment, onLikeToggle, isLiked, isEditable
       {/* 地域バッジとイベント日付 */}
       <div className="flex items-center gap-3 mb-3 flex-wrap">
         <div className="flex items-center gap-1.5">
-          <span className="text-purple-500">
+          <span className="text-sky-500">
             <LocationIcon />
           </span>
-          <span className="text-xs font-medium text-purple-600">
+          <span className="text-xs font-medium text-sky-600">
             {municipalityName}
           </span>
         </div>
@@ -183,7 +183,7 @@ export default function CommentCard({ comment, onLikeToggle, isLiked, isEditable
           <textarea
             value={editContent}
             onChange={(e) => setEditContent(e.target.value.slice(0, 500))}
-            className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-400 resize-none text-gray-700"
+            className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-400 resize-none text-gray-700"
             rows={4}
             maxLength={500}
           />
@@ -199,7 +199,7 @@ export default function CommentCard({ comment, onLikeToggle, isLiked, isEditable
               <button
                 onClick={handleSaveEdit}
                 disabled={isSaving || !editContent.trim()}
-                className="px-3 py-1.5 text-sm bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50"
+                className="px-3 py-1.5 text-sm bg-orange-500 text-white rounded-lg hover:bg-orange-600 disabled:opacity-50"
               >
                 {isSaving ? "保存中..." : "保存"}
               </button>

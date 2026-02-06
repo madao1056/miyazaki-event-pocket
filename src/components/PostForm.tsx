@@ -44,8 +44,8 @@ export default function PostForm({ municipalities, onPost }: PostFormProps) {
   return (
     <form onSubmit={handleSubmit} className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg border border-white/50">
       <div className="flex items-center gap-2 mb-4">
-        <div className="w-8 h-8 rounded-lg bg-purple-100 flex items-center justify-center">
-          <svg className="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="w-8 h-8 rounded-lg bg-orange-100 flex items-center justify-center">
+          <svg className="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
           </svg>
         </div>
@@ -57,7 +57,7 @@ export default function PostForm({ municipalities, onPost }: PostFormProps) {
           id="municipality"
           value={municipalityId}
           onChange={(e) => setMunicipalityId(e.target.value ? Number(e.target.value) : "")}
-          className="w-full px-4 py-3 bg-gray-50 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-400 text-gray-700"
+          className="w-full px-4 py-3 bg-gray-50 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-400 text-gray-700"
           required
         >
           <option value="">地域を選択</option>
@@ -75,7 +75,7 @@ export default function PostForm({ municipalities, onPost }: PostFormProps) {
           value={content}
           onChange={(e) => setContent(e.target.value.slice(0, 500))}
           placeholder="例: 駅前で突然のストリートライブが始まった！&#10;例: 商店街でセールやってる"
-          className="w-full px-4 py-3 bg-gray-50 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-400 resize-none text-gray-700 placeholder-gray-400"
+          className="w-full px-4 py-3 bg-gray-50 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-400 resize-none text-gray-700 placeholder-gray-400"
           rows={4}
           maxLength={500}
           required
@@ -93,7 +93,7 @@ export default function PostForm({ municipalities, onPost }: PostFormProps) {
           id="event_date"
           value={eventDate}
           onChange={(e) => setEventDate(e.target.value)}
-          className="w-full px-4 py-3 bg-gray-50 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-400 text-gray-700"
+          className="w-full px-4 py-3 bg-gray-50 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-400 text-gray-700"
         />
       </div>
 

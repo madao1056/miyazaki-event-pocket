@@ -47,11 +47,11 @@ body {
 
 /* グラデーション背景 */
 .gradient-bg {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #f67a05 0%, #4a88bb 100%);
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #f67a05 0%, #4a88bb 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -64,7 +64,7 @@ body {
 
 .card-hover:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 24px -8px rgba(102, 126, 234, 0.25);
+  box-shadow: 0 12px 24px -8px rgba(246, 122, 5, 0.25);
 }
 
 /* Safe area for iPhone home indicator */
