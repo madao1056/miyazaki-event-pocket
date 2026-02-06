@@ -17,7 +17,6 @@ export default function SearchPage() {
   const [keyword, setKeyword] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
-  const [hasSearched, setHasSearched] = useState(false);
 
   const fetchMunicipalities = useCallback(async () => {
     const res = await fetch("/api/municipalities");
@@ -49,12 +48,12 @@ export default function SearchPage() {
       setComments(data);
     }
     setIsLoading(false);
-    setHasSearched(true);
   }, [selectedMunicipality, dateFrom, dateTo, sort, keyword]);
 
   useEffect(() => {
     fetchMunicipalities();
-  }, [fetchMunicipalities]);
+    fetchComments();
+  }, [fetchMunicipalities, fetchComments]);
 
   const handleSearch = () => {
     setIsLoading(true);
@@ -62,9 +61,7 @@ export default function SearchPage() {
   };
 
   const handlePost = () => {
-    if (hasSearched) {
-      fetchComments();
-    }
+    fetchComments();
     setIsPostModalOpen(false);
   };
 
@@ -112,26 +109,13 @@ export default function SearchPage() {
         </button>
 
         {/* 検索結果 */}
-        {hasSearched && (
-          <>
-            <div className="text-sm text-gray-500 mb-4">
-              {comments.length}件の結果
-            </div>
-            {isLoading ? (
-              <div className="text-center text-gray-500 py-8">検索中...</div>
-            ) : (
-              <CommentList comments={comments} onLike={handleLike} onEdit={handleEdit} />
-            )}
-          </>
-        )}
-
-        {!hasSearched && (
-          <div className="text-center text-gray-400 py-12">
-            <svg className="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-            <p>条件を指定して検索してください</p>
-          </div>
+        <div className="text-sm text-gray-500 mb-4">
+          {comments.length}件の結果
+        </div>
+        {isLoading ? (
+          <div className="text-center text-gray-500 py-8">検索中...</div>
+        ) : (
+          <CommentList comments={comments} onLike={handleLike} onEdit={handleEdit} />
         )}
       </main>
 
