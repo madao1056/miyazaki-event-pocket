@@ -78,8 +78,9 @@ export default function SearchPage() {
       <main className="max-w-2xl mx-auto px-4 py-8 pb-24">
         {/* ヘッダー */}
         <div className="text-center mb-6">
-          <h1 className="text-2xl font-bold gradient-text">
-            イベント検索
+          <h1 className="text-2xl font-bold">
+            <span className="text-[#f67a05]">イベント</span>
+            <span className="text-[#4a88bb]">検索</span>
           </h1>
         </div>
 

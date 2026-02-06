@@ -55,8 +55,10 @@ export default function Home() {
       <main className="max-w-2xl mx-auto px-4 py-8 pb-24">
         {/* ヘッダー */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold gradient-text mb-2">
-            MiyazakiEventPocket
+          <h1 className="text-3xl font-bold mb-2">
+            <span className="text-[#f67a05]">Miyazaki</span>
+            <span className="text-[#4a88bb]">Event</span>
+            <span className="text-[#f67a05]">Pocket</span>
           </h1>
           <p className="text-sm text-gray-500" style={{ mixBlendMode: "multiply" }}>
             宮崎のイベント情報を掲載
