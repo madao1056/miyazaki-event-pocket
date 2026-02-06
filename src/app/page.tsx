@@ -58,7 +58,7 @@ export default function Home() {
           <h1 className="text-3xl font-bold gradient-text mb-2">
             MiyazakiEventPocket
           </h1>
-          <p className="text-sm text-gray-500" style={{ mixBlendMode: "color-dodge" }}>
+          <p className="text-sm text-gray-500" style={{ mixBlendMode: "multiply" }}>
             宮崎のイベント情報を掲載
           </p>
         </div>
