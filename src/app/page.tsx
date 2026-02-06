@@ -3,17 +3,12 @@
 import { useState, useEffect, useCallback } from "react";
 import PostForm from "@/components/PostForm";
 import CommentList from "@/components/CommentList";
-import Filters from "@/components/Filters";
-import type { Municipality, Comment, SortType } from "@/types";
+import BottomNavigation from "@/components/BottomNavigation";
+import type { Municipality, Comment } from "@/types";
 
 export default function Home() {
   const [municipalities, setMunicipalities] = useState<Municipality[]>([]);
   const [comments, setComments] = useState<Comment[]>([]);
-  const [selectedMunicipality, setSelectedMunicipality] = useState<number | null>(null);
-  const [dateFrom, setDateFrom] = useState("");
-  const [dateTo, setDateTo] = useState("");
-  const [sort, setSort] = useState<SortType>("newest");
-  const [keyword, setKeyword] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
 
@@ -26,28 +21,13 @@ export default function Home() {
   }, []);
 
   const fetchComments = useCallback(async () => {
-    const params = new URLSearchParams();
-    if (selectedMunicipality) {
-      params.set("municipality_id", String(selectedMunicipality));
-    }
-    if (dateFrom) {
-      params.set("date_from", dateFrom);
-    }
-    if (dateTo) {
-      params.set("date_to", dateTo);
-    }
-    params.set("sort", sort);
-    if (keyword.trim()) {
-      params.set("keyword", keyword.trim());
-    }
-
-    const res = await fetch(`/api/comments?${params.toString()}`);
+    const res = await fetch("/api/comments?sort=newest");
     if (res.ok) {
       const data = await res.json();
       setComments(data);
     }
     setIsLoading(false);
-  }, [selectedMunicipality, dateFrom, dateTo, sort, keyword]);
+  }, []);
 
   useEffect(() => {
     fetchMunicipalities();
@@ -83,22 +63,6 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="mb-6">
-          <Filters
-            municipalities={municipalities}
-            selectedMunicipality={selectedMunicipality}
-            onMunicipalityChange={setSelectedMunicipality}
-            dateFrom={dateFrom}
-            onDateFromChange={setDateFrom}
-            dateTo={dateTo}
-            onDateToChange={setDateTo}
-            sort={sort}
-            onSortChange={setSort}
-            keyword={keyword}
-            onKeywordChange={setKeyword}
-          />
-        </div>
-
         {isLoading ? (
           <div className="text-center text-gray-500 py-8">読み込み中...</div>
         ) : (
@@ -106,26 +70,16 @@ export default function Home() {
         )}
       </main>
 
-      {/* FABボタン */}
-      <button
-        onClick={() => setIsPostModalOpen(true)}
-        className="fixed bottom-6 right-6 w-14 h-14 gradient-bg rounded-full shadow-lg flex items-center justify-center hover:opacity-90 transition-all transform hover:scale-110 active:scale-95 z-40"
-        aria-label="投稿する"
-      >
-        <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
-        </svg>
-      </button>
+      {/* ボトムナビゲーション */}
+      <BottomNavigation onPostClick={() => setIsPostModalOpen(true)} />
 
       {/* 投稿モーダル */}
       {isPostModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
-          {/* オーバーレイ */}
           <div
             className="absolute inset-0 bg-black/50 backdrop-blur-sm"
             onClick={() => setIsPostModalOpen(false)}
           />
-          {/* モーダルコンテンツ */}
           <div className="relative w-full max-w-lg mx-4 animate-fade-in-up">
             <button
               onClick={() => setIsPostModalOpen(false)}

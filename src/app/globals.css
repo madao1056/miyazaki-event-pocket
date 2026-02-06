@@ -67,3 +67,8 @@ body {
   box-shadow: 0 12px 24px -8px rgba(102, 126, 234, 0.25);
 }
 
+/* Safe area for iPhone home indicator */
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
