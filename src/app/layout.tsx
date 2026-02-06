@@ -6,8 +6,8 @@ import GoogleAnalytics from "@/components/GoogleAnalytics";
 import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
 
 export const metadata: Metadata = {
-  title: "MiyazakiEventPocket - 宮崎の出来事を記録",
-  description: "宮崎県の今、起きている出来事を事実ベースで匿名投稿・閲覧できるアプリ",
+  title: "宮崎のイベント情報 | MiyazakiEventPocket",
+  description: "宮崎県のイベント情報を掲載。地域のお祭り、マルシェ、ライブなど宮崎の今起きている出来事を匿名で投稿・閲覧できるアプリ",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
@@ -18,8 +18,8 @@ export const metadata: Metadata = {
     google: "O32SL8ZFj4lGof0W5pwWINwKJJUSV_Wj123_1wRZQA4",
   },
   openGraph: {
-    title: "MiyazakiEventPocket",
-    description: "宮崎県の今、起きている出来事を事実ベースで匿名投稿・閲覧できるアプリ",
+    title: "宮崎のイベント情報 | MiyazakiEventPocket",
+    description: "宮崎県のイベント情報を掲載。地域のお祭り、マルシェ、ライブなど宮崎の今起きている出来事を匿名で投稿・閲覧できるアプリ",
     url: "https://eventpocket.vercel.app",
     siteName: "MiyazakiEventPocket",
     images: [
@@ -35,8 +35,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "MiyazakiEventPocket",
-    description: "宮崎県の今、起きている出来事を事実ベースで匿名投稿・閲覧できるアプリ",
+    title: "宮崎のイベント情報 | MiyazakiEventPocket",
+    description: "宮崎県のイベント情報を掲載。地域のお祭り、マルシェ、ライブなど宮崎の今起きている出来事を匿名で投稿・閲覧できるアプリ",
     images: ["/og-image.png"],
   },
   icons: {
