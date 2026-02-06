@@ -100,7 +100,7 @@ export default function PostForm({ municipalities, onPost }: PostFormProps) {
       <button
         type="submit"
         disabled={isSubmitting || !municipalityId || !content.trim()}
-        className="w-full py-3 px-4 gradient-bg text-white font-semibold rounded-xl hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+        className="w-full py-3 px-4 bg-[#f67a05] text-white font-semibold rounded-xl hover:bg-orange-600 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
       >
         {isSubmitting ? (
           <span className="flex items-center justify-center gap-2">
