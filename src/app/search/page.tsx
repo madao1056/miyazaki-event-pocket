@@ -106,7 +106,7 @@ export default function SearchPage() {
         {/* 検索ボタン */}
         <button
           onClick={handleSearch}
-          className="w-full py-3 px-4 gradient-bg text-white font-semibold rounded-xl hover:opacity-90 transition-all transform hover:scale-[1.02] active:scale-[0.98] mb-6"
+          className="w-full py-3 px-4 bg-purple-600 text-white font-semibold rounded-xl shadow-lg shadow-purple-300 hover:bg-purple-700 hover:shadow-xl hover:shadow-purple-400 transition-all transform hover:-translate-y-0.5 active:translate-y-0 active:shadow-md mb-6"
         >
           検索する
         </button>
