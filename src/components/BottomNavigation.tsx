@@ -11,14 +11,14 @@ export default function BottomNavigation({ onPostClick }: BottomNavigationProps)
   const pathname = usePathname();
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-gray-200 z-40 safe-area-bottom">
+    <nav className="fixed bottom-0 left-0 right-0 bg-[#4a88bb] z-40 safe-area-bottom">
       <div className="max-w-2xl mx-auto px-4">
         <div className="flex items-center justify-around h-16">
           {/* ホームボタン */}
           <Link
             href="/"
             className={`flex items-center justify-center w-16 h-full transition-colors ${
-              pathname === "/" ? "text-orange-500" : "text-gray-400 hover:text-gray-600"
+              pathname === "/" ? "text-white" : "text-white/60 hover:text-white"
             }`}
             aria-label="ホーム"
           >
@@ -35,7 +35,7 @@ export default function BottomNavigation({ onPostClick }: BottomNavigationProps)
           {/* 投稿ボタン（中央） */}
           <button
             onClick={onPostClick}
-            className="flex items-center justify-center w-14 h-14 -mt-5 gradient-bg rounded-full shadow-lg hover:opacity-90 transition-all transform hover:scale-105 active:scale-95"
+            className="flex items-center justify-center w-14 h-14 -mt-5 bg-[#f67a05] rounded-full shadow-lg shadow-orange-400/50 hover:bg-orange-500 transition-all transform hover:scale-105 active:scale-95"
             aria-label="投稿する"
           >
             <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -47,7 +47,7 @@ export default function BottomNavigation({ onPostClick }: BottomNavigationProps)
           <Link
             href="/search"
             className={`flex items-center justify-center w-16 h-full transition-colors ${
-              pathname === "/search" ? "text-orange-500" : "text-gray-400 hover:text-gray-600"
+              pathname === "/search" ? "text-white" : "text-white/60 hover:text-white"
             }`}
             aria-label="検索"
           >
