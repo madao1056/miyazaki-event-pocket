@@ -35,7 +35,7 @@ export default function BottomNavigation({ onPostClick }: BottomNavigationProps)
           {/* 投稿ボタン（中央） */}
           <button
             onClick={onPostClick}
-            className="flex items-center justify-center w-14 h-14 -mt-5 bg-[#f67a05] rounded-full shadow-lg shadow-orange-400/50 hover:bg-orange-500 transition-all transform hover:scale-105 active:scale-95"
+            className="flex items-center justify-center w-14 h-14 -mt-5 bg-[#f67a05] rounded-full hover:bg-orange-500 transition-all transform hover:scale-105 active:scale-95"
             aria-label="投稿する"
           >
             <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
