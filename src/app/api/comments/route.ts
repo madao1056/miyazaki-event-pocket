@@ -76,7 +76,7 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
-  const { municipality_id, content, event_date } = body;
+  const { municipality_id, content, event_date, media_urls } = body;
 
   if (!municipality_id || !content) {
     return NextResponse.json(
@@ -94,12 +94,13 @@ export async function POST(request: NextRequest) {
 
   const clientHash = await generateClientHash();
 
-  // 挿入データを構築（event_dateは任意）
+  // 挿入データを構築（event_date, media_urlsは任意）
   const insertData: {
     municipality_id: number;
     content: string;
     client_hash: string;
     event_date?: string;
+    media_urls?: string[];
   } = {
     municipality_id,
     content,
@@ -108,6 +109,10 @@ export async function POST(request: NextRequest) {
 
   if (event_date) {
     insertData.event_date = event_date;
+  }
+
+  if (media_urls && Array.isArray(media_urls) && media_urls.length > 0) {
+    insertData.media_urls = media_urls;
   }
 
   const { data, error } = await supabase

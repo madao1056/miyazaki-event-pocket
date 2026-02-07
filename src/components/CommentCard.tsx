@@ -212,6 +212,39 @@ export default function CommentCard({ comment, onLikeToggle, isLiked, isEditable
         </p>
       )}
 
+      {/* メディア表示 */}
+      {comment.media_urls && comment.media_urls.length > 0 && (
+        <div className={`mb-4 grid gap-2 ${
+          comment.media_urls.length === 1 ? "grid-cols-1" :
+          comment.media_urls.length === 2 ? "grid-cols-2" : "grid-cols-3"
+        }`}>
+          {comment.media_urls.map((url, index) => {
+            const isVideo = /\.(mp4|webm|mov)$/i.test(url);
+            return (
+              <div key={index} className="relative aspect-square rounded-lg overflow-hidden bg-gray-100">
+                {isVideo ? (
+                  <video
+                    src={url}
+                    controls
+                    className="w-full h-full object-cover"
+                    preload="metadata"
+                  />
+                ) : (
+                  <a href={url} target="_blank" rel="noopener noreferrer">
+                    <img
+                      src={url}
+                      alt={`投稿画像 ${index + 1}`}
+                      className="w-full h-full object-cover hover:opacity-90 transition-opacity cursor-pointer"
+                      loading="lazy"
+                    />
+                  </a>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
+
       {/* フッター */}
       <div className="flex items-center justify-between text-sm">
         <span className="text-gray-400">{formatDate(comment.created_at)}</span>

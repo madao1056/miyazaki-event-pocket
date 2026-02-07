@@ -13,6 +13,8 @@ export interface Comment {
   created_at: string;
   /** イベント開催日（任意） */
   event_date?: string;
+  /** メディアURL配列（画像・動画） */
+  media_urls?: string[];
   municipality?: Municipality;
 }
 
